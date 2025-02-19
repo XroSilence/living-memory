@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "prebuild": "prettier --write .",
-    "build": "tsc && node build/index.js"
+    "build": "tsc && node ./build/index.js"
   },
-  "keywords": [],
+  "keywords": ["modelcontextprotocol", "AI", "AGENTS", "FILESYSTEMS", "MEMORY", "STORAGE"],
   "author": "XroSilence",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "description": "",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.5.0",

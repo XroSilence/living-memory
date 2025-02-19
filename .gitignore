@@ -3,7 +3,7 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-build/
+build
 
 # TypeScript
 *.tsbuildinfo
@@ -12,7 +12,24 @@ build/
 .vscode/
 .history/
 *.code-workspace
-MEMORY_DIR/
+MEMORY_DIR/*
+build/*
+BUILD_DIR/*
+dist/*
+DIST_DIR/*
+*.log
+*.log.*
+*.log-*
+*.log_*
+*.log/*
+*.log/*/*
+*.log/*/*/*
+*.log/*/*/*/*
+*.log/*/*/*/*/*
+*.log/*/*/*/*/*/*
+*.log/*/*/*/*/*/*/*
+*.log/*/*/*/*/*/*/*/*
+*.log/*/*/*/*/*/*/*/*/*
 
 # Logs
 logs/
