@@ -1,4 +1,0 @@
-MEMORY_DIR
-└── ARCHIVE/
-    MEMORY_DIR\ARCHIVE
-    
