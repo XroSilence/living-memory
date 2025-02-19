@@ -7,7 +7,14 @@
     "prebuild": "prettier --write .",
     "build": "tsc && node ./build/index.js"
   },
-  "keywords": ["modelcontextprotocol", "AI", "AGENTS", "FILESYSTEMS", "MEMORY", "STORAGE"],
+  "keywords": [
+    "modelcontextprotocol",
+    "AI",
+    "AGENTS",
+    "FILESYSTEMS",
+    "MEMORY",
+    "STORAGE"
+  ],
   "author": "XroSilence",
   "license": "GPL-3.0-only",
   "description": "",

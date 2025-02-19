@@ -1,4 +1,5 @@
 # Living Memory System
+
 ![GitHub](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 ![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FXroSilence%2Fliving-memory&countColor=%23263759)
 
@@ -9,6 +10,7 @@ Living Memory is a sophisticated filesystem-based memory system that provides tw
 ## 🛠️ Core Features
 
 ### RAW Mode Operations
+
 - `create_file`: Create plain text files
 - `create_dir`: Create directories
 - `move_file`: Move files between locations
@@ -20,6 +22,7 @@ Living Memory is a sophisticated filesystem-based memory system that provides tw
 - `fuzzy_search`: Search through files
 
 ### JSON Mode Enhancements
+
 - Tag-based organization
 - Structured data storage
 - Enhanced search capabilities
@@ -29,12 +32,14 @@ Living Memory is a sophisticated filesystem-based memory system that provides tw
 ## 💡 Use Cases
 
 1. **Knowledge Management**
+
    - Personal knowledge bases
    - Research documentation
    - Project wikis
    - Learning resources
 
 2. **Data Organization**
+
    - Structured content management
    - Tagged file systems
    - Hierarchical information storage
@@ -49,21 +54,23 @@ Living Memory is a sophisticated filesystem-based memory system that provides tw
 ## 🎯 Prompting Examples
 
 ### RAW Mode
+
 ```javascript
 // Create a new file
 MODE_RAW.create_file({
   name: "notes.txt",
-  content: "Important meeting notes"
+  content: "Important meeting notes",
 });
 
 // Move a file
 MODE_RAW.move_file({
   source: "old/path.txt",
-  dest: "new/path.txt"
+  dest: "new/path.txt",
 });
 ```
 
 ### JSON Mode
+
 ```javascript
 // Create a tagged file
 MODE_JSON.create_file({
@@ -72,37 +79,41 @@ MODE_JSON.create_file({
   content: {
     title: "Project Alpha",
     status: "active",
-    priority: "high"
-  }
+    priority: "high",
+  },
 });
 
 // Fuzzy search
 MODE_JSON.fuzzy_search({
-  query: "alpha project"
+  query: "alpha project",
 });
 ```
 
 ## 🚀 Capabilities
 
 ### File Management
+
 - Create, read, update, and delete operations
 - Directory structure maintenance
 - File movement and organization
 - Content appending and modification
 
 ### Search & Discovery
+
 - Full-text search
 - Tag-based filtering
 - Fuzzy matching
 - Pattern recognition
 
 ### Data Structure
+
 - Flexible content formats
 - Metadata management
 - Relationship mapping
 - Version control support
 
 ### Security
+
 - File integrity checks
 - Access control
 - Data validation
