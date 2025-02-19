@@ -41,14 +41,16 @@ const MemorySchema = z.object({
 class MemoryManagerError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = 'MemoryManagerError';
+    this.name = "MemoryManagerError";
   }
 }
 
 class FileOperationError extends MemoryManagerError {
   constructor(operation: string, path: string, error: unknown) {
-    super(`Failed to ${operation} at ${path}: ${error instanceof Error ? error.message : String(error)}`);
-    this.name = 'FileOperationError';
+    super(
+      `Failed to ${operation} at ${path}: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    this.name = "FileOperationError";
   }
 }
 // Memory Manager Base Class
@@ -62,7 +64,7 @@ abstract class MemoryManager {
         this.updateDirectoryFile();
       }
     } catch (error) {
-      throw new FileOperationError('initialize directories', MEMORY_DIR, error);
+      throw new FileOperationError("initialize directories", MEMORY_DIR, error);
     }
   }
 
@@ -71,7 +73,11 @@ abstract class MemoryManager {
       const tree = this.generateDirectoryTree(MEMORY_DIR);
       fs.writeFileSync(DIRECTORY_FILE, tree);
     } catch (error) {
-      throw new FileOperationError('update directory file', DIRECTORY_FILE, error);
+      throw new FileOperationError(
+        "update directory file",
+        DIRECTORY_FILE,
+        error,
+      );
     }
   }
 
@@ -98,7 +104,7 @@ abstract class MemoryManager {
 
       return output;
     } catch (error) {
-      throw new FileOperationError('generate directory tree', dir, error);
+      throw new FileOperationError("generate directory tree", dir, error);
     }
   }
 
@@ -149,7 +155,7 @@ class JSONMemoryManager extends MemoryManager {
       fs.writeFileSync(filePath, JSON.stringify(memory, null, 2));
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('create JSON file', name, error);
+      throw new FileOperationError("create JSON file", name, error);
     }
   }
 
@@ -159,7 +165,7 @@ class JSONMemoryManager extends MemoryManager {
       fs.mkdirSync(dirPath, { recursive: true });
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('create directory', name, error);
+      throw new FileOperationError("create directory", name, error);
     }
   }
 
@@ -170,7 +176,7 @@ class JSONMemoryManager extends MemoryManager {
       fs.renameSync(sourcePath, destPath);
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('move file', `${source} to ${dest}`, error);
+      throw new FileOperationError("move file", `${source} to ${dest}`, error);
     }
   }
 
@@ -181,7 +187,11 @@ class JSONMemoryManager extends MemoryManager {
       fs.renameSync(sourcePath, destPath);
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('move directory', `${source} to ${dest}`, error);
+      throw new FileOperationError(
+        "move directory",
+        `${source} to ${dest}`,
+        error,
+      );
     }
   }
 
@@ -194,7 +204,7 @@ class JSONMemoryManager extends MemoryManager {
       fs.writeFileSync(filePath, JSON.stringify(memory, null, 2));
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('append content', file, error);
+      throw new FileOperationError("append content", file, error);
     }
   }
 
@@ -205,7 +215,11 @@ class JSONMemoryManager extends MemoryManager {
       fs.renameSync(oldPath, newPath);
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('rename file', `${oldName} to ${newName}`, error);
+      throw new FileOperationError(
+        "rename file",
+        `${oldName} to ${newName}`,
+        error,
+      );
     }
   }
 
@@ -216,7 +230,7 @@ class JSONMemoryManager extends MemoryManager {
         .filter((file) => file.endsWith(".json"))
         .map((file) => path.join(MEMORY_DIR, file));
     } catch (error) {
-      throw new FileOperationError('read all files', MEMORY_DIR, error);
+      throw new FileOperationError("read all files", MEMORY_DIR, error);
     }
   }
 
@@ -225,7 +239,7 @@ class JSONMemoryManager extends MemoryManager {
       const content = fs.readFileSync(path.join(MEMORY_DIR, file), "utf-8");
       return JSON.parse(content).content;
     } catch (error) {
-      throw new FileOperationError('read file content', file, error);
+      throw new FileOperationError("read file content", file, error);
     }
   }
 
@@ -243,7 +257,7 @@ class JSONMemoryManager extends MemoryManager {
         );
       });
     } catch (error) {
-      throw new FileOperationError('fuzzy search', query, error);
+      throw new FileOperationError("fuzzy search", query, error);
     }
   }
 }
@@ -259,7 +273,7 @@ class RAWMemoryManager extends MemoryManager {
       fs.writeFileSync(path.join(MEMORY_DIR, name), content);
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('create RAW file', name, error);
+      throw new FileOperationError("create RAW file", name, error);
     }
   }
 
@@ -268,7 +282,7 @@ class RAWMemoryManager extends MemoryManager {
       fs.mkdirSync(path.join(MEMORY_DIR, name), { recursive: true });
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('create directory', name, error);
+      throw new FileOperationError("create directory", name, error);
     }
   }
 
@@ -279,7 +293,7 @@ class RAWMemoryManager extends MemoryManager {
       fs.renameSync(sourcePath, destPath);
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('move file', `${source} to ${dest}`, error);
+      throw new FileOperationError("move file", `${source} to ${dest}`, error);
     }
   }
 
@@ -290,7 +304,11 @@ class RAWMemoryManager extends MemoryManager {
       fs.renameSync(sourcePath, destPath);
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('move directory', `${source} to ${dest}`, error);
+      throw new FileOperationError(
+        "move directory",
+        `${source} to ${dest}`,
+        error,
+      );
     }
   }
 
@@ -299,7 +317,7 @@ class RAWMemoryManager extends MemoryManager {
       fs.appendFileSync(path.join(MEMORY_DIR, file), content);
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('append content', file, error);
+      throw new FileOperationError("append content", file, error);
     }
   }
 
@@ -310,7 +328,11 @@ class RAWMemoryManager extends MemoryManager {
       fs.renameSync(oldPath, newPath);
       this.updateDirectoryFile();
     } catch (error) {
-      throw new FileOperationError('rename file', `${oldName} to ${newName}`, error);
+      throw new FileOperationError(
+        "rename file",
+        `${oldName} to ${newName}`,
+        error,
+      );
     }
   }
 
@@ -331,7 +353,7 @@ class RAWMemoryManager extends MemoryManager {
 
         return fileList;
       } catch (error) {
-        throw new FileOperationError('read directory', dir, error);
+        throw new FileOperationError("read directory", dir, error);
       }
     };
 
@@ -342,17 +364,17 @@ class RAWMemoryManager extends MemoryManager {
     try {
       return fs.readFileSync(path.join(MEMORY_DIR, file), "utf-8");
     } catch (error) {
-      throw new FileOperationError('read file content', file, error);
+      throw new FileOperationError("read file content", file, error);
     }
   }
 
   fuzzySearch(query: string) {
     try {
       return this.readAllFiles().filter((file) =>
-        this.readFileContent(file).toLowerCase().includes(query.toLowerCase())
+        this.readFileContent(file).toLowerCase().includes(query.toLowerCase()),
       );
     } catch (error) {
-      throw new FileOperationError('fuzzy search', query, error);
+      throw new FileOperationError("fuzzy search", query, error);
     }
   }
 }
@@ -367,7 +389,7 @@ const server = new Server(
     capabilities: {
       tools: {},
     },
-  }
+  },
 );
 
 // Initialize memory managers
@@ -381,7 +403,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "MODE_JSON",
-        description: "Interact with memory in JSON mode with structured data and memory graphs",
+        description:
+          "Interact with memory in JSON mode with structured data and memory graphs",
         inputSchema: {
           type: "object",
           properties: {
@@ -411,7 +434,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "MODE_RAW",
-        description: "Interact with memory in RAW mode for direct filesystem access",
+        description:
+          "Interact with memory in RAW mode for direct filesystem access",
         inputSchema: {
           type: "object",
           properties: {
@@ -454,8 +478,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     let result;
     switch (action) {
       case "create_file":
-        if (!args?.name || !args?.content || typeof args.name !== "string" || typeof args.content !== "string") {
-          throw new MemoryManagerError("Name and content are required for creating a file");
+        if (
+          !args?.name ||
+          !args?.content ||
+          typeof args.name !== "string" ||
+          typeof args.content !== "string"
+        ) {
+          throw new MemoryManagerError(
+            "Name and content are required for creating a file",
+          );
         }
         manager.createFile(args.name, args.content);
         result = `File ${args.name} created successfully in ${MEMORY_DIR}`;
@@ -463,39 +494,69 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "create_dir":
         if (!args?.name || typeof args.name !== "string") {
-          throw new MemoryManagerError("Name is required for creating a directory");
+          throw new MemoryManagerError(
+            "Name is required for creating a directory",
+          );
         }
         manager.createDir(args.name);
         result = `Directory ${args.name} created successfully in ${MEMORY_DIR}`;
         break;
 
       case "move_file":
-        if (!args?.source || !args?.dest || typeof args.source !== "string" || typeof args.dest !== "string") {
-          throw new MemoryManagerError("Source and destination are required for moving a file");
+        if (
+          !args?.source ||
+          !args?.dest ||
+          typeof args.source !== "string" ||
+          typeof args.dest !== "string"
+        ) {
+          throw new MemoryManagerError(
+            "Source and destination are required for moving a file",
+          );
         }
         manager.moveFile(args.source, args.dest);
         result = `File moved from ${args.source} to ${args.dest} in ${MEMORY_DIR}`;
         break;
 
       case "move_dir":
-        if (!args?.source || !args?.dest || typeof args.source !== "string" || typeof args.dest !== "string") {
-          throw new MemoryManagerError("Source and destination are required for moving a directory");
+        if (
+          !args?.source ||
+          !args?.dest ||
+          typeof args.source !== "string" ||
+          typeof args.dest !== "string"
+        ) {
+          throw new MemoryManagerError(
+            "Source and destination are required for moving a directory",
+          );
         }
         manager.moveDir(args.source, args.dest);
         result = `Directory moved from ${args.source} to ${args.dest} in ${MEMORY_DIR}`;
         break;
 
       case "append_content":
-        if (!args?.name || !args?.content || typeof args.name !== "string" || typeof args.content !== "string") {
-          throw new MemoryManagerError("Name and content are required for appending content");
+        if (
+          !args?.name ||
+          !args?.content ||
+          typeof args.name !== "string" ||
+          typeof args.content !== "string"
+        ) {
+          throw new MemoryManagerError(
+            "Name and content are required for appending content",
+          );
         }
         manager.appendContent(args.name, args.content);
         result = `Content appended to ${args.name} in ${MEMORY_DIR}`;
         break;
 
       case "rename_file":
-        if (!args?.source || !args?.dest || typeof args.source !== "string" || typeof args.dest !== "string") {
-          throw new MemoryManagerError("Source and destination are required for renaming a file");
+        if (
+          !args?.source ||
+          !args?.dest ||
+          typeof args.source !== "string" ||
+          typeof args.dest !== "string"
+        ) {
+          throw new MemoryManagerError(
+            "Source and destination are required for renaming a file",
+          );
         }
         manager.renameFile(args.source, args.dest);
         result = `File renamed from ${args.source} to ${args.dest} in ${MEMORY_DIR}`;
@@ -507,7 +568,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "read_file_content":
         if (!args?.name || typeof args.name !== "string") {
-          throw new MemoryManagerError("Name is required for reading file content");
+          throw new MemoryManagerError(
+            "Name is required for reading file content",
+          );
         }
         result = manager.readFileContent(args.name);
         break;
@@ -533,7 +596,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     };
   } catch (error) {
     console.error(`Error in tool execution:`, error);
-    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
     return {
       content: [
         {
