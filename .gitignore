@@ -11,6 +11,7 @@ yarn-error.log*
 .vscode/
 .history/
 *.code-workspace
+MEMORY_DIR/
 
 # Logs
 logs/
