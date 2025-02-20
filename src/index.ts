@@ -407,15 +407,19 @@ server.setRequestHandler(ListPromptsRequestSchema, async () => {
     prompts: [
       {
         name: "MODE_JSON",
-        template: "Execute {action} operation in structured JSON mode.\nParameters:\n- name: {name}\n- content: {content}\n- tags: {tags}\n- source: {source}\n- dest: {dest}\n- query: {query}\n\nEnsure all parameters conform to JSON schema specifications.",
-        description: "Template for JSON mode operations with structured data and memory graphs"
+        template:
+          "Execute {action} operation in structured JSON mode.\nParameters:\n- name: {name}\n- content: {content}\n- tags: {tags}\n- source: {source}\n- dest: {dest}\n- query: {query}\n\nEnsure all parameters conform to JSON schema specifications.",
+        description:
+          "Template for JSON mode operations with structured data and memory graphs",
       },
       {
         name: "MODE_RAW",
-        template: "Execute {action} operation in raw filesystem mode.\nParameters:\n- name: {name}\n- content: {content}\n- source: {source}\n- dest: {dest}\n- query: {query}\n\nDirect filesystem manipulation without structured constraints.",
-        description: "Template for RAW mode operations with direct filesystem access"
-      }
-    ]
+        template:
+          "Execute {action} operation in raw filesystem mode.\nParameters:\n- name: {name}\n- content: {content}\n- source: {source}\n- dest: {dest}\n- query: {query}\n\nDirect filesystem manipulation without structured constraints.",
+        description:
+          "Template for RAW mode operations with direct filesystem access",
+      },
+    ],
   };
 });
 
