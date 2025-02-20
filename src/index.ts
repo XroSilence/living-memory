@@ -37,6 +37,11 @@ const MemorySchema = z.object({
   content: z.string(),
 });
 
+const ListPromptsRequestSchema = z.object({
+  method: z.literal("prompts/list"),
+  params: z.object({}).optional(),
+});
+
 // Error classes for better error handling
 class MemoryManagerError extends Error {
   constructor(message: string) {
@@ -388,6 +393,7 @@ const server = new Server(
   {
     capabilities: {
       tools: {},
+      prompts: {}, // Add prompts capability
     },
   },
 );
@@ -395,6 +401,23 @@ const server = new Server(
 // Initialize memory managers
 const jsonManager = new JSONMemoryManager();
 const rawManager = new RAWMemoryManager();
+
+server.setRequestHandler(ListPromptsRequestSchema, async () => {
+  return {
+    prompts: [
+      {
+        name: "MODE_JSON",
+        template: "Execute {action} operation in structured JSON mode.\nParameters:\n- name: {name}\n- content: {content}\n- tags: {tags}\n- source: {source}\n- dest: {dest}\n- query: {query}\n\nEnsure all parameters conform to JSON schema specifications.",
+        description: "Template for JSON mode operations with structured data and memory graphs"
+      },
+      {
+        name: "MODE_RAW",
+        template: "Execute {action} operation in raw filesystem mode.\nParameters:\n- name: {name}\n- content: {content}\n- source: {source}\n- dest: {dest}\n- query: {query}\n\nDirect filesystem manipulation without structured constraints.",
+        description: "Template for RAW mode operations with direct filesystem access"
+      }
+    ]
+  };
+});
 
 // Tool definitions
 server.setRequestHandler(ListToolsRequestSchema, async () => {
@@ -612,11 +635,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 // Start the server
 async function main() {
   try {
-    console.error(`Starting Living Memory MCP Server`);
+    console.error(`Starting Enhanced Living Memory MCP Server`);
     console.error(`Memory directory will be created at: ${MEMORY_DIR}`);
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    console.error("Living Memory MCP Server running on stdio");
+    console.error("Enhanced Living Memory MCP Server running on stdio");
   } catch (error) {
     console.error("Fatal error during server startup:", error);
     process.exit(1);
